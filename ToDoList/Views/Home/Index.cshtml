@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model List<ToDoList.Models.Todo>
+
+<button class="openbtn" >&#9776;</button> @*jquerye dön*@
+<style>
+    .white-hr {
+        background-color: white;
+        border: none;
+        height: 1px;
+    }</style>
+<div class="container">
+    <div class="row">
+        <div class="main col-md-12">
+            <div class="app-container" style="max-height:80vh" id="taskList">
+                <div style="display:flex; justify-content:flex-start;">
+                    <h1 class="app-header">TO DO LIST</h1>
+                    <div style="margin-left:5vh;">
+                        <button id="showall" class="select-header" style="margin-right:5vh;">Tümü</button>
+                        <button id="showdone" class="select-header" style="margin-right:5vh;">Tamamlananlar</button>
+                        <button id="showundone" class="select-header">Tamamlanmayanlar</button>
+                        <hr class="white-hr">
+                </div>
+              
+                </div>
+                <div class="add-task">
+                    <input type="text" autocomplete="off" placeholder="Add New Task" class="task-input">
+                    <input type="submit" value="" class="submit-task" title="Add Task">
+                </div>
+                <ul class="task-list">
+                    @foreach (var item in Model)
+                    {
+                        <li class="task-list-item mb-3 list-todo" data-id="@item.Id" data-createdDate="@item.CreatedOn" data-updatedDate=" @item.UpdatedOn" data-expiredDate="@item.ExpiredOn" data-description="@item.Description">
+                            <div class="checkbox-wrapper-39">
+                                <label>
+                                    @if (item.IsCompleted == true)
+                                    {
+                                        <input type="checkbox" checked />
+                                        <span  class="checkbox"></span>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" />
+                                        <span class="checkbox"></span>
+                                    }
+                                </label>
+                            </div>
+                            @if (item.IsCompleted == true)
+                            {
+                                <label class="task-list-item-label done">
+                                    <span class="todoname-label">@item.Title</span>
+                                </label>
+                            }
+                            else
+                            {
+                                <label class="task-list-item-label">
+                                    <span class="todoname-label">@item.Title</span>
+                                </label>
+                            }
+                            <div class="btn-container">
+                                <span class="info-btn" title="İnfo Task"></span>
+
+                                <span class="delete-btn" title="Delete Task"></span>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="details none">
+            <div class="detail-container" style=" max-height:80vh">
+                <div style="display:flex; justify-content:space-between;">
+                    <h1 class="app-header"> DETAIL </h1>
+                    <button type="button" class="btn-close btn-close-white" aria-label="Close"></button>
+                </div>
+
+                <div class="mb-3">
+                    <label class="mb-2 description-label">Yapılacak İş</label>
+                    <label class="task-list-item todonameparent">
+                        <span class="todoname" contenteditable="false" style="color:white"></span>
+                    </label>
+                </div>
+                <div class="mb-3">
+                    <label class="mb-2 description-label">Açıklama</label>
+                    <textarea class="add-desc description-input" placeholder="Bir Açıklama Gir"></textarea>
+                </div>
+                <div style="display:flex; font-size:x-small; justify-content:space-between; margin-left:1px;">
+                    <label style="width:21vh;" class="mb-2 text-white">Son Güncelleme Tarihi</label>
+                    <label style="width:21vh;" class="mb-2 text-white">Bitiş Tarihi</label>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <input id="updated" style="width:21vh;" class="datetime-picker" readonly value="" type="datetime-local">
+                    <span style="color:white">|</span>
+                    <input id="expired" style="width:21vh;" class="datetime-picker" value="" type="datetime-local">
+                </div>
+                <div class="mt-3 update-parent" style="display:flex; justify-content:space-around;">
+                    <button type="submit" value="" class="update-task" title="Update Task"><img src="~/img/update-100.png" class="update-img" /></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
